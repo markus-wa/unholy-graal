@@ -9,12 +9,12 @@ Don't take this too seriously.
 ## Rating Overview
 
 | Language | Rating | Explanation |
-|          |        |             |
-| Python   | 🥴       | Support for packages is quite bad |
-| NodeJS   | 😐       | Seems alright, some native deps issues remaining |
-| Go       | ❌       | Since Go dropped LLVM support this won't work |
-| Rust     | 💩       |             |
-| C++      | 🧛🧄       | I didn't try and don't plan to |
+| ---      | ---    | ---         |
+| Python   | 🥴     | Support for packages is quite bad |
+| NodeJS   | 😐     | Seems alright, some native deps issues remaining |
+| Go       | ❌     | Since Go dropped LLVM support this won't work |
+| Rust     | 💩     | No          |
+| C++      | 🧛🧄    | I didn't try and don't plan to |
 | C        |        |             |
 
 ## Python
