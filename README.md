@@ -12,7 +12,7 @@ Don't take this too seriously.
 | ---      | ---    | ---         |
 | Python   | 🥴     | Support for packages is quite bad |
 | NodeJS   | 😐     | Seems alright, some native deps issues remaining |
-| Go       | ❌     | Since Go dropped LLVM support this won't work |
+| Go       | ❌     | Go dropped LLVM support :/ |
 | Rust     | 💩     | No          |
 | C++      | 🧛🧄    | I didn't try and don't plan to |
 | C        |        |             |
