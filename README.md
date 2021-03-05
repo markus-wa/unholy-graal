@@ -15,7 +15,7 @@ Don't take this too seriously.
 | Go       | ❌     | Go dropped LLVM support :/ |
 | Rust     | 💩     | No          |
 | C++      | 🧛🧄    | I didn't try and don't plan to |
-| C        |        |             |
+| C        | ❓     | Should work but doesn't (and also, what year is it again?) |
 
 ## Python
 
@@ -129,3 +129,21 @@ Items of class foo in the document:
 ```
 
 Oh? You're interested in interop with other languages on Graal? Probably not.
+
+## C
+
+https://www.graalvm.org/reference-manual/llvm/Compiling/#external-library-dependencies
+
+> This hello-curses.c file can be then compiled and run with:
+
+```
+$LLVM_TOOLCHAIN/clang hello-curses.c -lncurses -o hello-curses
+lli hello-curses
+```
+
+```
+Toplevel executable /tmp/NCURSES-Programming-HOWTO-examples/wtf does not contain bitcode
+	at <llvm> null(Unknown)
+```
+
+🤔
