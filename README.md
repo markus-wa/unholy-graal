@@ -6,7 +6,7 @@ Don't take this too seriously.
 
 ![GraalVM Language Support Visualisation](unholy-graal.png)
 
-## Rating Overview
+## Overview
 
 | Language | Rating | Explanation |
 | ---      | ---    | ---         |
