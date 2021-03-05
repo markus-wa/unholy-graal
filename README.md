@@ -2,7 +2,20 @@
 
 A write up of the state of GraalVM language support and interop in early 2021.
 
+Don't take this too seriously.
+
 ![GraalVM Language Support Visualisation](unholy-graal.png)
+
+## Rating Overview
+
+| Language | Rating | Explanation |
+|          |        |             |
+| Python   | 🥴       | Support for packages is quite bad |
+| NodeJS   | 😐       | Seems alright, some native deps issues remaining |
+| Go       | ❌       | Since Go dropped LLVM support this won't work |
+| Rust     | 💩       |             |
+| C++      | 🧛🧄       | I didn't try and don't plan to |
+| C        |        |             |
 
 ## Python
 
@@ -11,6 +24,15 @@ A write up of the state of GraalVM language support and interop in early 2021.
 > **which may be used to install a *small* list of packages known to work *to some extent* with GraalVM’s Python runtime.**
 
 Thanks, Oracle
+
+## NodeJS
+
+Interop seems decent.
+Pretty quick to get something simple running.
+
+But didn't manage to run [Ghost](https://github.com/TryGhost/Ghost), some native SQLite deps seem to cause problems.
+
+😐
 
 ## Go
 
@@ -28,17 +50,16 @@ Hello, world!
 
 🥳
 
-... Let's do something more interesting ...
+... Let's do something more interesting, like parsing a HTML document ...
 
-Stolen from https://michaelbh.com/blog/graalvm-and-rust-1/ - because I'm not that crazy.
-
+Please read https://michaelbh.com/blog/graalvm-and-rust-1/ - I just copied the wall of error messages from there.
 
 ```
 Global variable _ZN12string_cache4atom12STRING_CACHE17h43d70dbc9890e871E is declared but not defined.
 	at <llvm> null(Unknown)
 ```
 
-ok, let's try again ...
+ok, let's try again - surely we just have to compile all our dependencies properly 🙃
 
 ```
 ERROR: com.oracle.truffle.api.dsl.UnsupportedSpecializationException: Unexpected values provided for <signals.c:36:30>:36 LLVMSignalNodeGen#1: [13, 1], [Integer,Long]
@@ -60,7 +81,7 @@ org.graalvm.polyglot.PolyglotException: com.oracle.truffle.api.dsl.UnsupportedSp
 	at com.oracle.truffle.llvm.launcher.LLVMLauncher.main(LLVMLauncher.java:53)
 ```
 
-maybe one more
+right, now we need to write some glue code in C to make it work, but that shouldn't be too difficult right?
 
 ```
 ERROR: java.lang.IllegalStateException: Missing LLVM builtin: llvm.fshl.i64
@@ -72,7 +93,7 @@ org.graalvm.polyglot.PolyglotException: java.lang.IllegalStateException: Missing
 	at com.oracle.truffle.llvm.runtime.nodes.op.LLVMArithmeticNodeFactory$LLVMI64ArithmeticNodeGen.executeGeneric_generic3(LLVMArithmeticNodeFactory.java:22
 ```
 
-ok, just have to re-implement some random function in LLVM assembly
+aaah right, we just have to re-implement some random function in LLVM assembly - that makes sense!
 
 ```
 define i64 @fshli64(i64 %a, i64 %b, i64 %s) #24 {
@@ -96,3 +117,15 @@ define i64 @fshli64(i64 %a, i64 %b, i64 %s) #24 {
   ret i64 %re
 }
 ```
+
+🎉 we can parse a HTML document! How convenient!
+
+```
+$ lli --lib $(rustc --print sysroot)/lib/libstd-* graalhello.bc
+Document title: Hello, world!
+Items of class foo in the document:
+	Bar
+	Baz
+```
+
+Oh? You're interested in interop with other languages on Graal? Probably not.
